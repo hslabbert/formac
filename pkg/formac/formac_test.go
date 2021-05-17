@@ -18,7 +18,7 @@ func TestFormatters(t *testing.T) {
 		{Format: "UnixExpanded", Formatter: FormatUnixExpanded, Want: "00:00:5e:00:53:00"},
 		//{Format: "EUI", Formatter: FormatEUI, Want: "00-00-5E-00-53-00"},
 		//{Format: "Bare", Formatter: FormatBare, Want: "00005E005300"},
-		//{Format: "PgSQL", Formatter: FormatPgSQL, Want: "00005e:005300"},
+		{Format: "PgSQL", Formatter: FormatPgSQL, Want: "00005e:005300"},
 	}
 
 	hwmac, _ := net.ParseMAC(macaddress)
