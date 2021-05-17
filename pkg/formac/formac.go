@@ -29,6 +29,24 @@ func FormatUnixExpanded(hwaddr net.HardwareAddr) string {
 	return hwaddr.String()
 }
 
+// FormatUnixCompact takes a net.HardwareAddress and returns a Unix-formatted
+// MAC address with extraneous zeroes ("0") stripped.
+func FormatUnixCompact(hwaddr net.HardwareAddr) string {
+	mac := hwaddr.String()
+	var sb strings.Builder
+	for i := 0; i < len(mac); i += 3 {
+		if mac[i] == 48 && mac[i+1] == 48 {
+			sb.WriteString("0")
+		} else {
+			sb.WriteString(mac[i : i+2])
+		}
+		if i+2 < len(mac) {
+			sb.WriteString(":")
+		}
+	}
+	return sb.String()
+}
+
 // FormatPgSQL takes a net.HardwareAddress and returns a PostgresQL-formatted
 // MAC address.
 func FormatPgSQL(hwaddr net.HardwareAddr) string {
