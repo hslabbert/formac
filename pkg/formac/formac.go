@@ -20,3 +20,9 @@ func FormatCisco(hwaddr net.HardwareAddr) string {
 	}
 	return sb.String()
 }
+
+// FormatUnixExpanded takes a net.HardwareAddress and returns a Unix-formatted
+// MAC address.
+func FormatUnixExpanded(hwaddr net.HardwareAddr) string {
+	return hwaddr.String()
+}
