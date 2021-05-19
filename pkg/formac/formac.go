@@ -44,6 +44,7 @@ func FormatUnixCompact(hwaddr net.HardwareAddr) string {
 			sb.WriteString(":")
 		}
 	}
+
 	return sb.String()
 }
 
@@ -51,12 +52,21 @@ func FormatUnixCompact(hwaddr net.HardwareAddr) string {
 // MAC address.
 func FormatPgSQL(hwaddr net.HardwareAddr) string {
 	mac := hwaddr.String()
-	mac = strings.Replace(mac, ":", "", -1)
+	macstripped := strings.Replace(mac, ":", "", -1)
 
 	var sb strings.Builder
-	sb.WriteString(mac[0:6])
+	sb.WriteString(macstripped[0:6])
 	sb.WriteString(":")
-	sb.WriteString(mac[6:12])
+	sb.WriteString(macstripped[6:12])
 
 	return sb.String()
+}
+
+// FormatBare takes a net.HardwareAddress and returns a "bare"
+// MAC address, i.e. capital hex characters only with no delimiters.
+func FormatBare(hwaddr net.HardwareAddr) string {
+	mac := hwaddr.String()
+	macstripped := strings.Replace(mac, ":", "", -1)
+
+	return strings.ToUpper(macstripped)
 }
