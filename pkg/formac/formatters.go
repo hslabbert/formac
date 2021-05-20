@@ -1,19 +1,9 @@
 package formac
 
 import (
-	"fmt"
 	"net"
 	"strings"
 )
-
-type macStruct struct {
-	Cisco        string
-	UnixExpanded string
-	UnixCompact  string
-	EUI          string
-	Bare         string
-	PgSQL        string
-}
 
 // FormatCisco takes a net.HardwareAddress and returns a Cisco-formatted
 // MAC address.
@@ -89,39 +79,4 @@ func FormatEUI(hwaddr net.HardwareAddr) string {
 	macEUI64Lower := strings.Replace(mac, ":", "-", -1)
 
 	return strings.ToUpper(macEUI64Lower)
-}
-
-// getStruct takes a net.HardwareAddr and returns a macs struct
-// with the supplied net.HardwareAddr in various formats.
-// This function is internal as we want a struct to DRY up
-// rendering the different formats for representation in other
-// convenience functions like GetPlain and GetJSON.
-func getStruct(hwaddr net.HardwareAddr) macStruct {
-	m := macStruct{
-		Cisco:        FormatCisco(hwaddr),
-		UnixExpanded: FormatUnixExpanded(hwaddr),
-		UnixCompact:  FormatUnixCompact(hwaddr),
-		EUI:          FormatEUI(hwaddr),
-		Bare:         FormatBare(hwaddr),
-		PgSQL:        FormatPgSQL(hwaddr),
-	}
-	return m
-}
-
-// GetPlain takes a net.HardwareAddr and returns a multi-line,
-// plaintext string of that MAC address in common formats.
-// This *could* be implemented as String() method on
-// the internal macStruct type, but we want that type to
-// remain internal but have a public way to return the
-// plaintext representation.
-func GetPlain(hwaddr net.HardwareAddr) string {
-	macs := getStruct(hwaddr)
-	var sb strings.Builder
-	fmt.Fprintf(&sb, "Cisco: %s\n", macs.Cisco)
-	fmt.Fprintf(&sb, "UnixExpanded: %s\n", macs.UnixExpanded)
-	fmt.Fprintf(&sb, "UnixCompact: %s\n", macs.UnixCompact)
-	fmt.Fprintf(&sb, "EUI: %s\n", macs.EUI)
-	fmt.Fprintf(&sb, "Bare: %s\n", macs.Bare)
-	fmt.Fprintf(&sb, "PgSQL: %s\n", macs.PgSQL)
-	return sb.String()
 }
