@@ -5,6 +5,15 @@ import (
 	"strings"
 )
 
+type macs struct {
+	Cisco        string
+	UnixExpanded string
+	UnixCompact  string
+	EUI          string
+	Bare         string
+	PgSQL        string
+}
+
 // FormatCisco takes a net.HardwareAddress and returns a Cisco-formatted
 // MAC address.
 func FormatCisco(hwaddr net.HardwareAddr) string {
@@ -79,4 +88,21 @@ func FormatEUI(hwaddr net.HardwareAddr) string {
 	macEUI64Lower := strings.Replace(mac, ":", "-", -1)
 
 	return strings.ToUpper(macEUI64Lower)
+}
+
+// getStruct takes a net.HardwareAddr and returns a macs struct
+// with the supplied net.HardwareAddr in various formats.
+// This function is internal as we want a struct to DRY up
+// rendering the different formats for representation in other
+// convenience functions like GetPlain and GetJSON.
+func getStruct(hwaddr net.HardwareAddr) macs {
+	m := macs{
+		Cisco:        FormatCisco(hwaddr),
+		UnixExpanded: FormatUnixExpanded(hwaddr),
+		UnixCompact:  FormatUnixCompact(hwaddr),
+		EUI:          FormatEUI(hwaddr),
+		Bare:         FormatBare(hwaddr),
+		PgSQL:        FormatPgSQL(hwaddr),
+	}
+	return m
 }
