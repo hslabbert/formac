@@ -5,7 +5,7 @@ import (
 	"testing"
 )
 
-const testMac string = "00-00-5E-00-53-00"
+const testMac string = "00-00-5E-00-53-01"
 
 func TestFormatters(t *testing.T) {
 
@@ -14,12 +14,12 @@ func TestFormatters(t *testing.T) {
 		Formatter func(net.HardwareAddr) string
 		Want      string
 	}{
-		{Format: "Cisco", Formatter: FormatCisco, Want: "0000.5e00.5300"},
-		{Format: "UnixExpanded", Formatter: FormatUnixExpanded, Want: "00:00:5e:00:53:00"},
-		{Format: "UnixCompact", Formatter: FormatUnixCompact, Want: "0:0:5e:0:53:0"},
-		{Format: "EUI", Formatter: FormatEUI, Want: "00-00-5E-00-53-00"},
-		{Format: "Bare", Formatter: FormatBare, Want: "00005E005300"},
-		{Format: "PgSQL", Formatter: FormatPgSQL, Want: "00005e:005300"},
+		{Format: "Cisco", Formatter: FormatCisco, Want: "0000.5e00.5301"},
+		{Format: "UnixExpanded", Formatter: FormatUnixExpanded, Want: "00:00:5e:00:53:01"},
+		{Format: "UnixCompact", Formatter: FormatUnixCompact, Want: "0:0:5e:0:53:1"},
+		{Format: "EUI", Formatter: FormatEUI, Want: "00-00-5E-00-53-01"},
+		{Format: "Bare", Formatter: FormatBare, Want: "00005E005301"},
+		{Format: "PgSQL", Formatter: FormatPgSQL, Want: "00005e:005301"},
 	}
 
 	hwmac, _ := net.ParseMAC(testMac)

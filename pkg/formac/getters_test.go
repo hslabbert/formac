@@ -11,12 +11,12 @@ func TestGetStruct(t *testing.T) {
 
 	got, _ := getStruct(testMac)
 	want := macStruct{
-		Cisco:        "0000.5e00.5300",
-		UnixExpanded: "00:00:5e:00:53:00",
-		UnixCompact:  "0:0:5e:0:53:0",
-		EUI:          "00-00-5E-00-53-00",
-		Bare:         "00005E005300",
-		PgSQL:        "00005e:005300",
+		Cisco:        "0000.5e00.5301",
+		UnixExpanded: "00:00:5e:00:53:01",
+		UnixCompact:  "0:0:5e:0:53:1",
+		EUI:          "00-00-5E-00-53-01",
+		Bare:         "00005E005301",
+		PgSQL:        "00005e:005301",
 	}
 
 	if got != want {
@@ -32,17 +32,17 @@ func TestGetFormatted(t *testing.T) {
 	}{
 		{
 			Format: "plain",
-			Want: `Cisco: 0000.5e00.5300
-UnixExpanded: 00:00:5e:00:53:00
-UnixCompact: 0:0:5e:0:53:0
-EUI: 00-00-5E-00-53-00
-Bare: 00005E005300
-PgSQL: 00005e:005300`,
+			Want: `Cisco: 0000.5e00.5301
+UnixExpanded: 00:00:5e:00:53:01
+UnixCompact: 0:0:5e:0:53:1
+EUI: 00-00-5E-00-53-01
+Bare: 00005E005301
+PgSQL: 00005e:005301`,
 			AssertFunction: assertMACEqualString,
 		},
 		{
 			Format:         "json",
-			Want:           `{"Cisco": "0000.5e00.5300","UnixExpanded": "00:00:5e:00:53:00","UnixCompact": "0:0:5e:0:53:0","EUI": "00-00-5E-00-53-00","Bare": "00005E005300","PgSQL": "00005e:005300"}`,
+			Want:           `{"Cisco": "0000.5e00.5301","UnixExpanded": "00:00:5e:00:53:01","UnixCompact": "0:0:5e:0:53:1","EUI": "00-00-5E-00-53-01","Bare": "00005E005301","PgSQL": "00005e:005301"}`,
 			AssertFunction: assertMACEqualJSON,
 		},
 	}

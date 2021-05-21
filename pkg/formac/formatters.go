@@ -35,8 +35,8 @@ func FormatUnixCompact(hwaddr net.HardwareAddr) string {
 	mac := hwaddr.String()
 	var sb strings.Builder
 	for i := 0; i < len(mac); i += 3 {
-		if mac[i] == 48 && mac[i+1] == 48 {
-			sb.WriteString("0")
+		if mac[i] == 48 {
+			sb.WriteString(mac[i+1 : i+2])
 		} else {
 			sb.WriteString(mac[i : i+2])
 		}

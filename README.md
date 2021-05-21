@@ -33,18 +33,18 @@ Usage of formac:
 Default to `plain` output:
 
 ```
-$ formac 00-00-5E-00-53-00
-Cisco: 0000.5e00.5300
-UnixExpanded: 00:00:5e:00:53:00
-UnixCompact: 0:0:5e:0:53:0
-EUI: 00-00-5E-00-53-00
-Bare: 00005E005300
-PgSQL: 00005e:005300
+$ formac 00-00-5E-00-53-01
+Cisco: 0000.5e00.5301
+UnixExpanded: 00:00:5e:00:53:01
+UnixCompact: 0:0:5e:0:53:1
+EUI: 00-00-5E-00-53-01
+Bare: 00005E005301
+PgSQL: 00005e:005301
 ```
 
 Or as `json`:
 
 ```
-$ formac -format json 0000.5e00.5300
-{"Cisco":"0000.5e00.5300","UnixExpanded":"00:00:5e:00:53:00","UnixCompact":"0:0:5e:0:53:0","EUI":"00-00-5E-00-53-00","Bare":"00005E005300","PgSQL":"00005e:005300"}
+$ formac -format json 0000.5e00.5301
+{"Cisco":"0000.5e00.5301","UnixExpanded":"00:00:5e:00:53:01","UnixCompact":"0:0:5e:0:53:1","EUI":"00-00-5E-00-53-01","Bare":"00005E005301","PgSQL":"00005e:005301"}
 ```
