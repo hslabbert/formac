@@ -17,6 +17,7 @@ func TestGetStruct(t *testing.T) {
 		EUI:          "00-00-5E-00-53-01",
 		Bare:         "00005E005301",
 		PgSQL:        "00005e:005301",
+		Manufacturer: "ICANN, IANA Department",
 	}
 
 	if got != want {
@@ -37,12 +38,13 @@ UnixExpanded: 00:00:5e:00:53:01
 UnixCompact: 0:0:5e:0:53:1
 EUI: 00-00-5E-00-53-01
 Bare: 00005E005301
-PgSQL: 00005e:005301`,
+PgSQL: 00005e:005301
+Manufacturer: ICANN, IANA Department`,
 			AssertFunction: assertMACEqualString,
 		},
 		{
 			Format:         "json",
-			Want:           `{"Cisco": "0000.5e00.5301","UnixExpanded": "00:00:5e:00:53:01","UnixCompact": "0:0:5e:0:53:1","EUI": "00-00-5E-00-53-01","Bare": "00005E005301","PgSQL": "00005e:005301"}`,
+			Want:           `{"Cisco": "0000.5e00.5301","UnixExpanded": "00:00:5e:00:53:01","UnixCompact": "0:0:5e:0:53:1","EUI": "00-00-5E-00-53-01","Bare": "00005E005301","PgSQL": "00005e:005301","Manufacturer":"ICANN, IANA Department"}`,
 			AssertFunction: assertMACEqualJSON,
 		},
 	}

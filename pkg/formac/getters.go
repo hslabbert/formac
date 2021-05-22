@@ -19,6 +19,7 @@ type macStruct struct {
 	EUI          string
 	Bare         string
 	PgSQL        string
+	Manufacturer string
 }
 
 // getStruct takes a mac address string and returns a macs struct
@@ -39,6 +40,7 @@ func getStruct(mac string) (macStruct, error) {
 		EUI:          FormatEUI(hwaddr),
 		Bare:         FormatBare(hwaddr),
 		PgSQL:        FormatPgSQL(hwaddr),
+		Manufacturer: GetManufacturer(hwaddr),
 	}
 	return m, nil
 }
@@ -56,7 +58,8 @@ func GetPlain(mac string) (string, error) {
 	fmt.Fprintf(&sb, "UnixCompact: %s\n", macs.UnixCompact)
 	fmt.Fprintf(&sb, "EUI: %s\n", macs.EUI)
 	fmt.Fprintf(&sb, "Bare: %s\n", macs.Bare)
-	fmt.Fprintf(&sb, "PgSQL: %s", macs.PgSQL)
+	fmt.Fprintf(&sb, "PgSQL: %s\n", macs.PgSQL)
+	fmt.Fprintf(&sb, "Manufacturer: %s", macs.Manufacturer)
 	return sb.String(), nil
 }
 

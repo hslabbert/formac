@@ -17,6 +17,8 @@ Outputted formats are:
 - `Bare`: No separators, upper case.
 - `PgSQL`: Two sets of 3 hex bytes, separated by a colon.
 
+Also, will output the manufacturer ("OUI") for the MAC if found.  Manufacturer lookups are from [IEEE registries](https://standards.ieee.org/products-services/regauth/index.html).
+
 ## Usage
 
 Basic usage:
@@ -40,11 +42,13 @@ UnixCompact: 0:0:5e:0:53:1
 EUI: 00-00-5E-00-53-01
 Bare: 00005E005301
 PgSQL: 00005e:005301
+Manufacturer: ICANN, IANA Department
 ```
 
 Or as `json`:
 
 ```
 $ formac -format json 0000.5e00.5301
-{"Cisco":"0000.5e00.5301","UnixExpanded":"00:00:5e:00:53:01","UnixCompact":"0:0:5e:0:53:1","EUI":"00-00-5E-00-53-01","Bare":"00005E005301","PgSQL":"00005e:005301"}
+{"Cisco":"0000.5e00.5301","UnixExpanded":"00:00:5e:00:53:01","UnixCompact":"0:0:5e:0:53:1","EUI":"00-00-5E-00-53-01","Bare":"00005E005301","PgSQL":"00005e:005301","Manufacturer":"IC
+ANN, IANA Department"}
 ```
