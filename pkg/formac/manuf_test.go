@@ -1,11 +1,11 @@
 package formac
 
 import (
+	"bytes"
 	"fmt"
 	"net"
 	"reflect"
 	"testing"
-	"testing/fstest"
 )
 
 const testRegistryString = `Registry,Assignment,Organization Name,Organization Address
@@ -25,14 +25,9 @@ func TestGetManufacturer(t *testing.T) {
 
 func TestLoadCSVRegistry(t *testing.T) {
 
-	m := fstest.MapFS{
-		"testregistry.csv": {
-			Data: []byte(testRegistryString),
-		},
-	}
-	regdata, _ := m.ReadFile("testregistry.csv")
+	regReader := bytes.NewReader([]byte(testRegistryString))
 
-	got := loadCSVRegistry(&regdata)
+	got := loadCSVRegistry(regReader)
 	want := macManufRegistryMap{
 		"000001": "XEROX CORPORATION",
 		"00005E": "ICANN, IANA Department",

@@ -1,10 +1,11 @@
 package formac
 
 import (
+	"bytes"
 	"embed"
 	"encoding/csv"
+	"io"
 	"net"
-	"strings"
 )
 
 //go:embed data/*
@@ -28,23 +29,23 @@ type registrySearchResult struct {
 var macManufRegistries = map[string]macManufRegistry{
 	"oui": {
 		PrefixLength: 6,
-		Registry:     loadCSVRegistry(readFileNoErr(csvfs, "data/oui.csv")),
+		Registry:     loadCSVRegistry(newFileReader(csvfs, "data/oui.csv")),
 	},
 	"cid": {
 		PrefixLength: 6,
-		Registry:     loadCSVRegistry(readFileNoErr(csvfs, "data/cid.csv")),
+		Registry:     loadCSVRegistry(newFileReader(csvfs, "data/cid.csv")),
 	},
 	"iab": {
 		PrefixLength: 7,
-		Registry:     loadCSVRegistry(readFileNoErr(csvfs, "data/iab.csv")),
+		Registry:     loadCSVRegistry(newFileReader(csvfs, "data/iab.csv")),
 	},
 	"mam": {
 		PrefixLength: 7,
-		Registry:     loadCSVRegistry(readFileNoErr(csvfs, "data/mam.csv")),
+		Registry:     loadCSVRegistry(newFileReader(csvfs, "data/mam.csv")),
 	},
 	"mas": {
 		PrefixLength: 9,
-		Registry:     loadCSVRegistry(readFileNoErr(csvfs, "data/oui36.csv")),
+		Registry:     loadCSVRegistry(newFileReader(csvfs, "data/oui36.csv")),
 	},
 }
 
@@ -76,9 +77,9 @@ func GetManufacturer(mac net.HardwareAddr) string {
 	return "Not found"
 }
 
-func loadCSVRegistry(data *[]byte) macManufRegistryMap {
-	reader := csv.NewReader(strings.NewReader(string(*data)))
-	rawCSVdata, _ := reader.ReadAll()
+func loadCSVRegistry(regReader io.Reader) macManufRegistryMap {
+	csvReader := csv.NewReader(regReader)
+	rawCSVdata, _ := csvReader.ReadAll()
 
 	r := make(macManufRegistryMap)
 	for lineNum, record := range rawCSVdata {
@@ -90,9 +91,9 @@ func loadCSVRegistry(data *[]byte) macManufRegistryMap {
 	return r
 }
 
-func readFileNoErr(fs embed.FS, name string) *[]byte {
+func newFileReader(fs embed.FS, name string) io.Reader {
 	b, _ := fs.ReadFile(name)
-	return &b
+	return bytes.NewReader(b)
 }
 
 func searchRegistry(mac macPrefix, r macManufRegistry) registrySearchResult {
