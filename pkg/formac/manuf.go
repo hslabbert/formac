@@ -36,7 +36,7 @@ var macManufRegistries = map[string]macManufRegistry{
 		Registry:     loadCSVRegistry(newFileReader(csvfs, "data/cid.csv")),
 	},
 	"iab": {
-		PrefixLength: 7,
+		PrefixLength: 9,
 		Registry:     loadCSVRegistry(newFileReader(csvfs, "data/iab.csv")),
 	},
 	"mam": {

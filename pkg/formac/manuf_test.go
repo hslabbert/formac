@@ -14,12 +14,47 @@ MA-L,00005E,"ICANN, IANA Department",INTERNET ASS'NED NOS.AUTHORITY Los Angeles 
 MA-L,54A493,IEEE Registration Authority,445 Hoes Lane Piscataway NJ US 08554`
 
 func TestGetManufacturer(t *testing.T) {
-	hwmac, _ := net.ParseMAC(testMac)
-	got := GetManufacturer(hwmac)
-	want := "ICANN, IANA Department"
+	cases := []struct {
+		Registry string
+		MAC      string
+		Want     string
+	}{
+		{
+			Registry: "oui",
+			MAC:      testMac,
+			Want:     "ICANN, IANA Department",
+		},
+		{
+			Registry: "cid",
+			MAC:      "BA-55-EC-00-53-01",
+			Want:     "IEEE 802.15",
+		},
+		{
+			Registry: "iab",
+			MAC:      "00-50-C2-4A-40-01",
+			Want:     "IEEE P1609 WG",
+		},
+		{
+			Registry: "mam",
+			MAC:      "74-1A-E0-90-53-01",
+			Want:     "Private",
+		},
+		{
+			Registry: "mas",
+			MAC:      "70-B3-D5-01-B0-01",
+			Want:     "AUDI AG",
+		},
+	}
 
-	if got != want {
-		t.Errorf("got %s, wanted %s", got, want)
+	for _, test := range cases {
+		t.Run(fmt.Sprintf("Retrieve a MAC vendor entry from the %s registry", test.Registry), func(t *testing.T) {
+			hwmac, _ := net.ParseMAC(test.MAC)
+			got := GetManufacturer(hwmac)
+
+			if got != test.Want {
+				t.Errorf("got %s, wanted %s", got, test.Want)
+			}
+		})
 	}
 }
 
