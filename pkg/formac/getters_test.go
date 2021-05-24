@@ -25,6 +25,13 @@ func TestGetStruct(t *testing.T) {
 	}
 }
 
+func TestGetStructInvalidMAC(t *testing.T) {
+	_, err := getStruct("invalid")
+	if err == nil {
+		t.Errorf("expected an error but didn't get one")
+	}
+}
+
 func TestGetFormatted(t *testing.T) {
 	cases := []struct {
 		Format         string
