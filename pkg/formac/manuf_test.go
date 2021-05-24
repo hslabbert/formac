@@ -48,7 +48,11 @@ func TestGetManufacturer(t *testing.T) {
 
 	for _, test := range cases {
 		t.Run(fmt.Sprintf("Retrieve a MAC vendor entry from the %s registry", test.Registry), func(t *testing.T) {
-			hwmac, _ := net.ParseMAC(test.MAC)
+			hwmac, err := net.ParseMAC(test.MAC)
+			if err != nil {
+				t.Fatalf("got an error on parsing MAC; was not expecting one")
+			}
+
 			got := GetManufacturer(hwmac)
 
 			if got != test.Want {
